@@ -305,7 +305,8 @@ css = '''
     all: unset;
 }
 '''
-examples = ["a <cat-toy> in <madhubani-art> style", "a <line-art> style mecha robot", "a piano being played by <bonzi>", "Candid photo of <cheburashka>, high resolution photo, trending on artstation, interior design"]
+# examples = ["a <cat-toy> in <madhubani-art> style", "a <line-art> style mecha robot", "a piano being played by <bonzi>", "Candid photo of <cheburashka>, high resolution photo, trending on artstation, interior design"]
+examples = []
 
 with gr.Blocks(css=css) as demo:
   state = gr.Variable({
@@ -321,68 +322,51 @@ with gr.Blocks(css=css) as demo:
           state[i] = True
           checkbox_states[i] = True
   gr.HTML('''
-  <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+  <div style="text-align: left; max-width: 720px; margin: 0 auto;">
               <div
                 style="
                   display: inline-flex;
-                  align-items: center;
+                  align-items: left;
                   gap: 0.8rem;
                   font-size: 1.75rem;
                 "
               >
-                <svg
-                  width="0.65em"
-                  height="0.65em"
-                  viewBox="0 0 115 115"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="23" height="23" fill="white"></rect>
-                  <rect y="69" width="23" height="23" fill="white"></rect>
-                  <rect x="23" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="23" y="69" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="46" width="23" height="23" fill="white"></rect>
-                  <rect x="46" y="69" width="23" height="23" fill="white"></rect>
-                  <rect x="69" width="23" height="23" fill="black"></rect>
-                  <rect x="69" y="69" width="23" height="23" fill="black"></rect>
-                  <rect x="92" width="23" height="23" fill="#D9D9D9"></rect>
-                  <rect x="92" y="69" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="115" y="46" width="23" height="23" fill="white"></rect>
-                  <rect x="115" y="115" width="23" height="23" fill="white"></rect>
-                  <rect x="115" y="69" width="23" height="23" fill="#D9D9D9"></rect>
-                  <rect x="92" y="46" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="92" y="115" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="92" y="69" width="23" height="23" fill="white"></rect>
-                  <rect x="69" y="46" width="23" height="23" fill="white"></rect>
-                  <rect x="69" y="115" width="23" height="23" fill="white"></rect>
-                  <rect x="69" y="69" width="23" height="23" fill="#D9D9D9"></rect>
-                  <rect x="46" y="46" width="23" height="23" fill="black"></rect>
-                  <rect x="46" y="115" width="23" height="23" fill="black"></rect>
-                  <rect x="46" y="69" width="23" height="23" fill="black"></rect>
-                  <rect x="23" y="46" width="23" height="23" fill="#D9D9D9"></rect>
-                  <rect x="23" y="115" width="23" height="23" fill="#AEAEAE"></rect>
-                  <rect x="23" y="69" width="23" height="23" fill="black"></rect>
-                </svg>
-                <h1 style="font-weight: 900; margin-bottom: 7px;">
-                  Stable Diffusion Conceptualizer
+                <h1 _style="font-weight: 900; margin-bottom: 7px;">
+                  🧑‍🚀 Astronaut Horse Concept Loader
                 </h1>
               </div>
-              <p style="margin-bottom: 10px; font-size: 94%">
-                Navigate through community created concepts and styles via Stable Diffusion Textual Inversion and pick yours for inference.
-                To train your own concepts and contribute to the library <a style="text-decoration: underline" href="https://colab.research.google.com/github/huggingface/notebooks/blob/main/diffusers/sd_textual_inversion_training.ipynb">check out this notebook</a>.
+              <br>
+              <p _style="margin-bottom: 10px; font-size: 94%">
+                Run your own text prompts into fine-tuned artist concepts, see the example below. Currently only loading two artist concepts while testing. Soon will automatically be able to add all concepts from astronaut horse artist collaborations. 
               </p>
+              <br>
+              <a href="http://www.astronaut.horse">http://www.astronaut.horse</a>
+              <br>
+              <br>
+              <h2>Prompt Examples Using Artist Token:</h2>
+              <ul>
+                <li>"a photograph of pink crystals in the style of &lt;artist&gt;"</li>
+                <li>"a painting of a horse in the style of &lt;artist&gt;"</li>
+              </ul>
+              <br>
+              <br>
+              <h2>Currently-Usable Concept Tokens</h2>
+              <ul>
+                <li>&lt;artist&gt;</li>
+                <li>&lt;ivan-stripes&gt;</li>
+              </ul>
             </div>
   ''')
   with gr.Row():
-        with gr.Column():
-          gr.Markdown(f"### Navigate the top 100 Textual-Inversion community trained concepts. Use 600+ from [The Library](https://huggingface.co/sd-concepts-library)")
-          with gr.Row():
-                  image_blocks = []
-                  #for i, model in enumerate(models):
-                  with gr.Box().style(border=None):
-                    gr.HTML(assembleHTML(models))
-                      #title_block(model["token"], model["id"])
-                      #image_blocks.append(image_block(model["images"], model["concept_type"]))
+        # with gr.Column():
+        #   gr.Markdown(f"")
+        #   with gr.Row():
+        #           image_blocks = []
+        #           #for i, model in enumerate(models):
+        #           with gr.Box().style(border=None):
+        #             gr.HTML(assembleHTML(models))
+        #               #title_block(model["token"], model["id"])
+        #               #image_blocks.append(image_block(model["images"], model["concept_type"]))
         with gr.Column():
           with gr.Box():
                   with gr.Row(elem_id="prompt_area").style(mobile_collapse=False, equal_height=True):
@@ -393,14 +377,14 @@ with gr.Blocks(css=css) as demo:
                           rounded=(True, False, False, True),
                           container=False,
                       )
-                      btn = gr.Button("Run",elem_id="run_btn").style(
+                      btn = gr.Button("generate image",elem_id="run_btn").style(
                           margin=False,
                           rounded=(False, True, True, False),
                       )  
                   with gr.Row().style():
                       infer_outputs = gr.Gallery(show_label=False, elem_id="generated-gallery").style(grid=[2], height="512px")
                   with gr.Row():
-                    gr.HTML("<p style=\"font-size: 95%;margin-top: .75em\">Prompting may not work as you are used to. <code>objects</code> may need the concept added at the end, <code>styles</code> may work better at the beginning. You can navigate on <a href='https://lexica.art'>lexica.art</a> to get inspired on prompts</p>")
+                    gr.HTML("<p></p>")
                   with gr.Row():
                     gr.Examples(examples=examples, fn=infer_examples, inputs=[text], outputs=infer_outputs, cache_examples=True)
           with gr.Group(elem_id="share-btn-container"):
@@ -420,4 +404,5 @@ with gr.Blocks(css=css) as demo:
       [],
       _js=share_js,
   )
+
 demo.queue(max_size=20).launch()
