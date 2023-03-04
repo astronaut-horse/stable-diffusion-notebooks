@@ -323,34 +323,25 @@ with gr.Blocks(css=css) as demo:
           checkbox_states[i] = True
   gr.HTML('''
   <div style="text-align: left; max-width: 720px; margin: 0 auto;">
-              <div
-                style="
-                  display: inline-flex;
-                  align-items: left;
-                  gap: 0.8rem;
-                  font-size: 1.75rem;
-                "
-              >
-                <h1 _style="font-weight: 900; margin-bottom: 7px;">
-                  🧑‍🚀 Astronaut Horse Concept Loader
-                </h1>
-              </div>
+              <br>
+              <h1 style="font-weight: 900; margin-bottom: 7px;">
+                🧑‍🚀 Astronaut Horse Concept Loader
+              </h1>
               <br>
               <p _style="margin-bottom: 10px; font-size: 94%">
-                Run your own text prompts into fine-tuned artist concepts, see the example below. Currently only loading two artist concepts while testing. Soon will automatically be able to add all concepts from astronaut horse artist collaborations. 
+                Run your own text prompts into fine-tuned artist concepts, see the example below. Currently only loading two artist concepts while testing. Soon will automatically be able to add all concepts from astronaut horse artist collaborations. There's some buggy stuff here that'll be cleared up next week but I wanted to at least get this usable for the weekend!
               </p>
               <br>
-              <a href="http://www.astronaut.horse">http://www.astronaut.horse</a>
+              <a style="text-decoration:underline;" href="http://www.astronaut.horse">http://www.astronaut.horse</a>
               <br>
               <br>
-              <h2>Prompt Examples Using Artist Token:</h2>
+              <h2 style="font-weight:500;">Prompt Examples Using Artist Token:</h2>
               <ul>
                 <li>"a photograph of pink crystals in the style of &lt;artist&gt;"</li>
-                <li>"a painting of a horse in the style of &lt;artist&gt;"</li>
+                <li>"a painting of a horse in the style of &lt;ivan-stripes&gt;"</li>
               </ul>
               <br>
-              <br>
-              <h2>Currently-Usable Concept Tokens</h2>
+              <h2 style="font-weight:500;">Currently-Usable Concept Tokens:</h2>
               <ul>
                 <li>&lt;artist&gt;</li>
                 <li>&lt;ivan-stripes&gt;</li>
@@ -390,19 +381,22 @@ with gr.Blocks(css=css) as demo:
           with gr.Group(elem_id="share-btn-container"):
             community_icon = gr.HTML(community_icon_html, visible=False)
             loading_icon = gr.HTML(loading_icon_html, visible=False)
-            share_button = gr.Button("Share to community", elem_id="share-btn", visible=False)
   checkbox_states = {}
   inputs = [text]
   btn.click(
         infer,
         inputs=inputs,
-        outputs=[infer_outputs, community_icon, loading_icon, share_button]
+        outputs=[infer_outputs, community_icon, loading_icon]
     )
-  share_button.click(
-      None,
-      [],
-      [],
-      _js=share_js,
-  )
-
+# after loading_icon on line 392.5
+#             share_button = gr.Button("", elem_id="share-btn", visible=False)
+# and update outputs=[...] on line 398 to match this
+        # outputs=[infer_outputs, community_icon, loading_icon, share_button]
+# then this has to be added after line 399
+#   share_button.click(
+#       None,
+#       [],
+#       [],
+#       _js=share_js,
+#   )
 demo.queue(max_size=20).launch()
