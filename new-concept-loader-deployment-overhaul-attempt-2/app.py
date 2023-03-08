@@ -126,22 +126,15 @@ def load_learned_embed_in_clip(learned_embeds_path, text_encoder, tokenizer, tok
 
 ahx_model_list = [model for model in models_list if "ahx" in model.modelId]
 
+
+
+# UNDER CONSTRUCTION ---------------------------------------------------------------
 from time import sleep
-print("--------------------------------------------------")
-print("--------------------------------------------------")
-print("--------------------------------------------------")
-print("models_list:")
-print(models_list)
-print("--------------------------------------------------")
-print("ahx_model_list:")
-print(ahx_model_list)
-print("--------------------------------------------------")
-print("--------------------------------------------------")
-print("--------------------------------------------------")
-sleep(60)
 
-
-print("Setting up the public library")
+print("--------------------------------------------------")
+print("--------------------------------------------------")
+print("Setting up the public library........")
+print("--------------------------------------------------")
 for model in ahx_model_list:
   model_content = {}
   model_id = model.modelId
@@ -152,7 +145,17 @@ for model in ahx_model_list:
     try:
       wget.download(embeds_url, out=model_id)
     except:
+      print("FAILURE: <-------------------------------------------------------------------")
+      print("model -->", model)
+      print("model_id -->", model_id)
+      print("CONTINUING - MODEL NOT LOADING")
+      sleep(30)
       continue
+
+    print("success / model loaded:")
+    print("model -->", model)
+    print("model_id -->", model_id)
+
   token_identifier = f"https://huggingface.co/{model_id}/raw/main/token_identifier.txt"
   response = requests.get(token_identifier)
   token_name = response.text
@@ -179,6 +182,13 @@ for model in ahx_model_list:
     continue
   model_content["token"] = learned_token
   models.append(model_content)
+  models.append(model_content)
+  print("--------------------------------------------------")
+
+print("--------------------------------------------------")
+print("--------------------------------------------------")
+print("--------------------------------------------------")
+sleep(60)
   
 #@title Run the app to navigate around [the Library](https://huggingface.co/sd-concepts-library)
 #@markdown Click the `Running on public URL:` result to run the Gradio app
