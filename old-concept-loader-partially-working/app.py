@@ -1,4 +1,37 @@
+
+Hugging Face's logo Hugging Face
+
+Models
+Datasets
+Spaces
+Docs
+Pricing
+
+Spaces:
+tombetthauser
+/
+astronaut-horse-concept-loader
+App
+Files and versions
+Community
+1
+Settings
+astronaut-horse-concept-loader
+/ app.py
+tombetthauser's picture
+tombetthauser
+Add space to trigger build
+cbe84e5
+5 days ago
+raw
+history
+blame
+edit
+delete
+No virus
+22.2 kB
 #@title Prepare the Concepts Library to be used
+
 import requests
 import os
 import gradio as gr
@@ -95,43 +128,49 @@ pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", 
 # pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", use_auth_token=True, revision="fp16", torch_dtype=torch.float16).to("cuda")
 
 def load_learned_embed_in_clip(learned_embeds_path, text_encoder, tokenizer, token=None):
-  print("1 <****************")
   loaded_learned_embeds = torch.load(learned_embeds_path, map_location="cpu")
   
+  _old_token = token
   # separate token and the embeds
   trained_token = list(loaded_learned_embeds.keys())[0]
-  print("2 <****************")
   embeds = loaded_learned_embeds[trained_token]
-  print("3 <****************")
 
   # cast to dtype of text_encoder
   dtype = text_encoder.get_input_embeddings().weight.dtype
-  print("4 <****************")
   
   # add the token in tokenizer
   token = token if token is not None else trained_token
-  print("5 <****************")
   num_added_tokens = tokenizer.add_tokens(token)
-  print("6 <****************")
   i = 1
+  print("start while loop **************")
   while(num_added_tokens == 0):
-    print(f"The tokenizer already contains the token {token}.")
     token = f"{token[:-1]}-{i}>"
-    print(f"Attempting to add the token {token}.")
     num_added_tokens = tokenizer.add_tokens(token)
-    print("7 <****************")
+    print("i --> ", i)
+    print("token --> ", token)
+    print("num_added_tokens --> ", num_added_tokens)
     i+=1
-  print("8 <****************")
+  print("end while loop **************")
   
   # resize the token embeddings
   text_encoder.resize_token_embeddings(len(tokenizer))
-  print("9 <****************")
   
   # get the id for the token and assign the embeds
   token_id = tokenizer.convert_tokens_to_ids(token)
-  print("10 <****************")
-  text_encoder.get_input_embeddings().weight.data[token_id] = embeds
-  print("11 <****************")
+  print("&&&&&&&&&&&&&&&&")
+  print("learned_embeds_path --> ", learned_embeds_path)
+  print("text_encoder --> ", text_encoder)
+  print("tokenizer --> ", tokenizer)
+  print("_old_token --> ", _old_token)
+  print("token --> ", token)
+  print("trained_token --> ", trained_token)
+  print("dtype --> ", dtype)
+  print("num_added_tokens --> ", num_added_tokens)
+  print("text_encoder --> ", text_encoder)
+  print("token_id --> ", token_id)
+  print("embeds --> ", embeds)
+  print("&&&&&&&&&&&&&&&&")
+  text_encoder.get_input_embeddings().weight.data[token_id] = embeds # <------ POINT OF FAILURE
   return token
 
 
