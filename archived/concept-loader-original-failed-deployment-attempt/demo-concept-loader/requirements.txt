@@ -1,0 +1,9 @@
+diffusers
+transformers
+accelerate
+nvidia-ml-py3
+ftfy
+wget
+huggingface_hub
+--extra-index-url https://download.pytorch.org/whl/cu113 
+torch

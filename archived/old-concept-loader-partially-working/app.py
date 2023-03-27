@@ -1,35 +1,3 @@
-
-Hugging Face's logo Hugging Face
-
-Models
-Datasets
-Spaces
-Docs
-Pricing
-
-Spaces:
-tombetthauser
-/
-astronaut-horse-concept-loader
-App
-Files and versions
-Community
-1
-Settings
-astronaut-horse-concept-loader
-/ app.py
-tombetthauser's picture
-tombetthauser
-Add space to trigger build
-cbe84e5
-5 days ago
-raw
-history
-blame
-edit
-delete
-No virus
-22.2 kB
 #@title Prepare the Concepts Library to be used
 
 import requests
@@ -122,7 +90,8 @@ models = []
 api_key = os.environ['api_key']
 my_token = api_key
 
-pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", revision="fp16", torch_dtype=torch.float16, use_auth_token=my_token).to("cuda")
+pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2", revision="fp16", torch_dtype=torch.float16, use_auth_token=my_token).to("cuda")
+# pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", revision="fp16", torch_dtype=torch.float16, use_auth_token=my_token).to("cuda")
 # }}}
 
 # pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", use_auth_token=True, revision="fp16", torch_dtype=torch.float16).to("cuda")
