@@ -463,8 +463,8 @@ with gr.Blocks() as control_net:
 with gr.Blocks() as inversion:
   gr.Markdown('''
       # 🧑‍🚀 Concept Trainer
-
-      [textual inversion training](https://textual-inversion.github.io/static/images/training/training.JPG)
+ 
+      ![textual inversion training](https://textual-inversion.github.io/static/images/training/training.JPG)
       
       This external tool lets you train your own new models / concepts from any images you want that will appear automatically be added to the Beta Concepts and Advanced Prompting tabs!
 
